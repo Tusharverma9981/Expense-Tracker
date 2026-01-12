@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://expense-tracker-oqsa.vercel.app/",
+    origin: "https://expense-tracker-oqsa.vercel.app",
     credentials: true,
   })
 );
