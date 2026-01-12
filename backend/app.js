@@ -18,10 +18,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://expense-tracker-k75v.vercel.app/",
+    origin: "https://expense-tracker-oqsa.vercel.app/",
     credentials: true,
   })
 );
+app.set("trust proxy", 1);
+
 
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("✅ Connected to MongoDB Atlas"))
@@ -121,7 +123,8 @@ app.post("/api/auth/login", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
+      secure: true,      // ✅ mandatory in production
+      sameSite: "none", 
       maxAge: 60 * 60 * 1000,
     });
 
