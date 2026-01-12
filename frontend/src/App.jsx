@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Create from "./pages/Create";
-import ViewHisaab from "./pages/hisab";
+import ViewHisaab from "./pages/Hisab";
 import EditHisaab from "./pages/EditHisab";
 import Scanner from "./pages/Scanner";
 import RoomPage from "./pages/Rooms";
