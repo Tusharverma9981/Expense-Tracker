@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api", // backend
-  withCredentials: true,               // needed for cookie JWT
+  baseURL: " https://expense-tracker-1-m5kv.onrender.com/api",
+  withCredentials: true
 });
+
 
 export default api;
