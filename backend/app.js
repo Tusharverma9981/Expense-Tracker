@@ -29,6 +29,12 @@ mongoose.connect(process.env.MONGO_URL)
 
 //these are the routes for the application
 
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,      // ✅ required on HTTPS
+  sameSite: "none",  // ✅ required for cross-site cookies
+  maxAge: 60 * 60 * 1000,
+});
 
 
 //these are for the main usage
