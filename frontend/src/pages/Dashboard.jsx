@@ -1,10 +1,33 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler } from 'chart.js';
-import { Pie, Bar, Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  PointElement,
+  LineElement,
+  Filler,
+} from "chart.js";
+import { Pie, Bar, Line } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  PointElement,
+  LineElement,
+  Filler
+);
 
 export default function Dashboard() {
   const [expensesByCategory, setExpensesByCategory] = useState([]);
@@ -21,77 +44,109 @@ export default function Dashboard() {
       .catch(() => navigate("/login"));
   }, []);
 
-  const totalExpenses = expensesByCategory.reduce((sum, item) => sum + item.totalAmount, 0);
+  const totalExpenses = expensesByCategory.reduce(
+    (sum, item) => sum + item.totalAmount,
+    0
+  );
   const totalHisaabs = hisaabTotals.length;
   const avgPerHisaab = totalHisaabs > 0 ? totalExpenses / totalHisaabs : 0;
   const monthlyExpense = totalExpenses; // Simplified
 
   // Chart data
   const expenseChartData = {
-    labels: expensesByCategory.map(item => item._id),
-    datasets: [{
-      label: 'Expenses by Category',
-      data: expensesByCategory.map(item => item.totalAmount),
-      backgroundColor: ['#6366f1', '#818cf8', '#4f46e5', '#a5b4fc', '#c7d2fe', '#312e81', '#4338ca'],
-      borderColor: '#1f2937',
-      borderWidth: 2
-    }]
+    labels: expensesByCategory.map((item) => item._id),
+    datasets: [
+      {
+        label: "Expenses by Category",
+        data: expensesByCategory.map((item) => item.totalAmount),
+        backgroundColor: [
+          "#3b82f6",
+          "#60a5fa",
+          "#1d4ed8",
+          "#93c5fd",
+          "#bfdbfe",
+          "#1e3a8a",
+          "#2563eb",
+        ],
+        borderColor: "#e5e7eb",
+        borderWidth: 2,
+      },
+    ],
   };
 
   const hisaabChartData = {
-    labels: hisaabTotals.map(h => h.title),
-    datasets: [{
-      label: 'Hisaab Total',
-      data: hisaabTotals.map(h => h.totalValue),
-      backgroundColor: 'rgba(99, 102, 241, 0.8)',
-      borderColor: 'rgba(99, 102, 241, 1)',
-      borderWidth: 2,
-      borderRadius: 8
-    }]
+    labels: hisaabTotals.map((h) => h.title),
+    datasets: [
+      {
+        label: "Hisaab Total",
+        data: hisaabTotals.map((h) => h.totalValue),
+        backgroundColor: "rgba(59, 130, 246, 0.8)",
+        borderColor: "rgba(59, 130, 246, 1)",
+        borderWidth: 2,
+        borderRadius: 10,
+      },
+    ],
   };
 
   // Monthly trend data
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const currentMonthIndex = new Date().getMonth();
   const last6Months = [];
-  for(let i = 5; i >= 0; i--) {
+  for (let i = 5; i >= 0; i--) {
     last6Months.push(months[(currentMonthIndex - i + 12) % 12]);
   }
-  const monthlyData = last6Months.map(() => Math.round(totalExpenses / 6 * (0.8 + Math.random() * 0.4)));
+  const monthlyData = last6Months.map(() =>
+    Math.round(totalExpenses / 6 * (0.8 + Math.random() * 0.4))
+  );
 
   const monthlyTrendData = {
     labels: last6Months,
-    datasets: [{
-      label: 'Monthly Expenses',
-      data: monthlyData,
-      borderColor: '#6366f1',
-      backgroundColor: 'rgba(99, 102, 241, 0.1)',
-      tension: 0.4,
-      fill: true,
-      borderWidth: 3
-    }]
+    datasets: [
+      {
+        label: "Monthly Expenses",
+        data: monthlyData,
+        borderColor: "#3b82f6",
+        backgroundColor: "rgba(59, 130, 246, 0.1)",
+        tension: 0.4,
+        fill: true,
+        borderWidth: 3,
+      },
+    ],
   };
 
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
-      legend: { 
-        position: 'bottom',
-        labels: { 
+      legend: {
+        position: "bottom",
+        labels: {
           font: { size: 14 },
           padding: 15,
-          color: '#d1d5db'
-        }
+          color: "#374151",
+        },
       },
       tooltip: {
-        backgroundColor: '#1f2937',
-        titleColor: '#ffffff',
-        bodyColor: '#d1d5db',
-        borderColor: '#374151',
-        borderWidth: 1
-      }
-    }
+        backgroundColor: "#ffffff",
+        titleColor: "#111827",
+        bodyColor: "#374151",
+        borderColor: "#e5e7eb",
+        borderWidth: 1,
+      },
+    },
   };
 
   const barOptions = {
@@ -99,287 +154,425 @@ export default function Dashboard() {
     plugins: {
       ...chartOptions.plugins,
       legend: { display: false },
-      title: { 
+      title: {
         display: true,
-        text: 'Total per Hisaab',
-        font: { size: 18, weight: 'bold' },
-        color: '#ffffff',
-        padding: { top: 10, bottom: 20 }
-      }
+        text: "Total per Hisaab",
+        font: { size: 18, weight: "bold" },
+        color: "#111827",
+        padding: { top: 10, bottom: 20 },
+      },
     },
     scales: {
-      y: { 
+      y: {
         beginAtZero: true,
-        ticks: { color: '#9ca3af' },
-        grid: { color: '#374151' }
+        ticks: { color: "#6b7280" },
+        grid: { color: "rgba(0,0,0,0.05)" },
       },
-      x: { 
-        ticks: { color: '#9ca3af' },
-        grid: { color: '#374151' }
-      }
-    }
+      x: {
+        ticks: { color: "#6b7280" },
+        grid: { color: "rgba(0,0,0,0.05)" },
+      },
+    },
   };
 
   const lineOptions = {
     ...chartOptions,
     plugins: {
       legend: { display: false },
-      title: { 
+      title: {
         display: true,
-        text: 'Monthly Trend',
-        font: { size: 18, weight: 'bold' },
-        color: '#ffffff'
-      }
+        text: "Monthly Trend",
+        font: { size: 18, weight: "bold" },
+        color: "#111827",
+      },
     },
     scales: {
-      y: { 
+      y: {
         beginAtZero: true,
-        ticks: { color: '#9ca3af' },
-        grid: { color: '#374151' }
+        ticks: { color: "#6b7280" },
+        grid: { color: "rgba(0,0,0,0.05)" },
       },
-      x: { 
-        ticks: { color: '#9ca3af' },
-        grid: { color: '#374151' }
-      }
-    }
+      x: {
+        ticks: { color: "#6b7280" },
+        grid: { color: "rgba(0,0,0,0.05)" },
+      },
+    },
   };
 
   const pieOptions = {
     ...chartOptions,
     plugins: {
       ...chartOptions.plugins,
-      title: { 
+      title: {
         display: true,
-        text: 'Expenses by Category',
-        font: { size: 18, weight: 'bold' },
-        color: '#ffffff',
-        padding: { top: 10, bottom: 20 }
+        text: "Expenses by Category",
+        font: { size: 18, weight: "bold" },
+        color: "#111827",
+        padding: { top: 10, bottom: 20 },
       },
       tooltip: {
         ...chartOptions.plugins.tooltip,
         callbacks: {
-          label: function(context) {
-            let label = context.label || '';
-            if (label) label += ': ';
-            const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
-            const percentage = ((context.parsed / total) * 100).toFixed(2) + '%';
-            return label + '₹' + context.parsed + ' (' + percentage + ')';
-          }
-        }
-      }
-    }
+          label: function (context) {
+            let label = context.label || "";
+            if (label) label += ": ";
+            const total = context.dataset.data.reduce(
+              (sum, val) => sum + val,
+              0
+            );
+            const percentage =
+              ((context.parsed / total) * 100).toFixed(2) + "%";
+            return (
+              label + "₹" + context.parsed + " (" + percentage + ")"
+            );
+          },
+        },
+      },
+    },
   };
 
   const sortedCategories = [...expensesByCategory]
     .sort((a, b) => b.totalAmount - a.totalAmount)
     .slice(0, 5);
 
+  const empty = expensesByCategory.length === 0 && hisaabTotals.length === 0;
+
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Navigation */}
-      <nav className="border-b border-zinc-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-full flex items-center justify-center">
-              <i className="fas fa-wallet text-white text-sm sm:text-lg"></i>
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      {/* Background gradients */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute -top-24 left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-blue-200/30 blur-[120px]" />
+        <div className="absolute top-[280px] left-[8%] h-[320px] w-[520px] rounded-full bg-blue-100/20 blur-[120px]" />
+        <div className="absolute bottom-0 right-[8%] h-[300px] w-[520px] rounded-full bg-blue-300/10 blur-[120px]" />
+      </div>
+
+      {/* Navbar */}
+      <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <i className="fas fa-wallet text-white text-lg"></i>
             </div>
-            <h1 className="text-lg sm:text-2xl font-bold text-white">KhaataPro</h1>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight">
+                KhaataPro
+              </h1>
+              <p className="text-xs text-gray-500 -mt-0.5">
+                Analytics Dashboard
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <a className="text-zinc-400 hover:text-white font-medium transition text-sm sm:text-base" href="/">
-              <i className="fas fa-home mr-2"></i>
-              <span className="hidden sm:inline">Home</span>
-            </a>
-          </div>
+
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 transition text-gray-700 font-semibold"
+          >
+            <i className="fas fa-home text-blue-500"></i> Home
+          </a>
         </div>
       </nav>
 
-      {/* Dashboard Content */}
-      <div className="max-w-7xl mx-auto py-6 sm:py-10 px-4 sm:px-6">
-        {/* Header */}
-        <div className="mb-8 sm:mb-12 text-center border-b border-zinc-800 pb-6 sm:pb-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-4">
-            <i className="fas fa-chart-line text-indigo-600 mr-2 sm:mr-3"></i>
-            Expense Dashboard
-          </h2>
-          <p className="text-base sm:text-lg text-zinc-400">Visual overview of your expenses and hisaabs</p>
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
+        {/* Page Header */}
+        <div className="rounded-xl border border-gray-200 bg-white p-6 sm:p-8 shadow-md">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Expense Dashboard
+              </h2>
+              <p className="text-gray-600 mt-2">
+                A visual breakdown of your spending patterns and hisaab totals.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/create"
+                className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-lg font-semibold transition shadow-lg shadow-blue-500/25"
+              >
+                <i className="fas fa-plus-circle"></i> Add Hisaab
+              </a>
+              <a
+                href="/scanner"
+                className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 px-5 py-3 rounded-lg font-semibold transition text-gray-700"
+              >
+                <i className="fa-solid fa-qrcode text-blue-500"></i> Scanner
+              </a>
+            </div>
+          </div>
         </div>
 
-        {expensesByCategory.length === 0 && hisaabTotals.length === 0 ? (
-          <div className="text-center py-12 sm:py-16">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 sm:p-12 max-w-md mx-auto">
-              <i className="fas fa-chart-pie text-5xl sm:text-6xl text-zinc-700 mb-3 sm:mb-4"></i>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">No Data Available Yet</h3>
-              <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6">
-                Start adding expenses to see your dashboard analytics
+        {/* Empty state */}
+        {empty ? (
+          <div className="text-center py-16">
+            <div className="max-w-xl mx-auto rounded-xl border border-gray-200 bg-white p-10 shadow-md">
+              <div className="w-16 h-16 mx-auto rounded-lg bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-500">
+                <i className="fas fa-chart-pie text-2xl"></i>
+              </div>
+              <h3 className="text-2xl font-bold mt-5">
+                No Analytics Yet
+              </h3>
+              <p className="text-gray-600 mt-2">
+                Create a hisaab and add expenses to unlock charts and insights.
               </p>
-              <a href="/create" className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold transition text-sm sm:text-base">
+              <a
+                href="/create"
+                className="inline-flex items-center gap-2 mt-6 bg-blue-500 hover:bg-blue-600 text-white px-7 py-4 rounded-lg font-semibold transition shadow-lg shadow-blue-500/25"
+              >
                 <i className="fas fa-plus"></i> Create First Hisaab
               </a>
             </div>
           </div>
         ) : (
           <>
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 bg-opacity-20 rounded-xl flex items-center justify-center">
-                    <i className="fas fa-rupee-sign text-indigo-500 text-lg sm:text-xl"></i>
-                  </div>
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-400 mb-1">Total Expenses</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white">
-                  ₹{totalExpenses.toLocaleString('en-IN', {maximumFractionDigits: 0})}
-                </p>
-              </div>
-
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 bg-opacity-20 rounded-xl flex items-center justify-center">
-                    <i className="fas fa-calendar-alt text-green-500 text-lg sm:text-xl"></i>
-                  </div>
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-400 mb-1">This Month</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white">
-                  ₹{monthlyExpense.toLocaleString('en-IN', {maximumFractionDigits: 0})}
-                </p>
-              </div>
-
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 bg-opacity-20 rounded-xl flex items-center justify-center">
-                    <i className="fas fa-book text-purple-500 text-lg sm:text-xl"></i>
-                  </div>
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-400 mb-1">Total Hisaabs</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white">{totalHisaabs}</p>
-              </div>
-
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-600 bg-opacity-20 rounded-xl flex items-center justify-center">
-                    <i className="fas fa-chart-bar text-yellow-500 text-lg sm:text-xl"></i>
-                  </div>
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-400 mb-1">Avg per Hisaab</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white">
-                  ₹{Math.round(avgPerHisaab).toLocaleString('en-IN')}
-                </p>
-              </div>
+            {/* Stats cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
+              <StatCard
+                title="Total Expenses"
+                value={`₹${totalExpenses.toLocaleString("en-IN", {
+                  maximumFractionDigits: 0,
+                })}`}
+                icon="fas fa-rupee-sign"
+                accent="blue"
+              />
+              <StatCard
+                title="This Month"
+                value={`₹${monthlyExpense.toLocaleString("en-IN", {
+                  maximumFractionDigits: 0,
+                })}`}
+                icon="fas fa-calendar-alt"
+                accent="green"
+              />
+              <StatCard
+                title="Total Hisaabs"
+                value={`${totalHisaabs}`}
+                icon="fas fa-book"
+                accent="purple"
+              />
+              <StatCard
+                title="Avg per Hisaab"
+                value={`₹${Math.round(avgPerHisaab).toLocaleString("en-IN")}`}
+                icon="fas fa-chart-bar"
+                accent="yellow"
+              />
             </div>
 
-            {/* Charts Row 1 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
-                {expensesByCategory.length > 0 && <Pie data={expenseChartData} options={pieOptions} />}
-              </div>
+            {/* Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+              <GlassPanel>
+                {expensesByCategory.length > 0 && (
+                  <Pie data={expenseChartData} options={pieOptions} />
+                )}
+              </GlassPanel>
 
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
-                {hisaabTotals.length > 0 && <Bar data={hisaabChartData} options={barOptions} />}
-              </div>
+              <GlassPanel>
+                {hisaabTotals.length > 0 && (
+                  <Bar data={hisaabChartData} options={barOptions} />
+                )}
+              </GlassPanel>
             </div>
 
-            {/* Charts Row 2 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
+            {/* Trend + Top categories */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+              <GlassPanel>
                 <Line data={monthlyTrendData} options={lineOptions} />
-              </div>
+              </GlassPanel>
 
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <i className="fas fa-trophy text-yellow-500"></i>
-                  Top Categories
-                </h3>
+              <GlassPanel>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <i className="fas fa-trophy text-yellow-500"></i>
+                    Top Categories
+                  </h3>
+                  <span className="text-xs text-gray-500">
+                    Top 5 only
+                  </span>
+                </div>
+
                 <div className="space-y-3">
                   {sortedCategories.map((cat, index) => {
-                    const percentage = ((cat.totalAmount / totalExpenses) * 100).toFixed(1);
+                    const percentage = (
+                      (cat.totalAmount / totalExpenses) *
+                      100
+                    ).toFixed(1);
+
                     return (
-                      <div key={cat._id} className="flex items-center justify-between p-3 bg-black border border-zinc-800 rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <span className="w-8 h-8 bg-indigo-600 bg-opacity-20 rounded-lg flex items-center justify-center text-indigo-400 font-bold text-sm">
+                      <div
+                        key={cat._id}
+                        className="rounded-lg border border-gray-200 bg-gray-50 p-4 flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="w-10 h-10 rounded-lg bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-800 font-bold">
                             {index + 1}
-                          </span>
-                          <div>
-                            <p className="text-white font-semibold">{cat._id}</p>
-                            <p className="text-xs text-zinc-400">{percentage}% of total</p>
+                          </div>
+
+                          <div className="min-w-0">
+                            <p className="font-bold truncate">{cat._id}</p>
+                            <p className="text-xs text-gray-500">
+                              {percentage}% of total
+                            </p>
                           </div>
                         </div>
-                        <p className="text-indigo-400 font-bold">
-                          ₹{cat.totalAmount.toLocaleString('en-IN')}
+
+                        <p className="text-blue-500 font-bold">
+                          ₹{cat.totalAmount.toLocaleString("en-IN")}
                         </p>
                       </div>
                     );
                   })}
                 </div>
-              </div>
+              </GlassPanel>
             </div>
 
-            {/* Recent Activity */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <i className="fas fa-history text-indigo-500"></i>
-                Recent Activity
-              </h3>
-              <div className="space-y-3">
-                {hisaabTotals.slice(0, 5).map((hisaab) => (
-                  <div key={hisaab._id} className="flex items-center justify-between p-3 bg-black border border-zinc-800 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-zinc-800 rounded-lg flex items-center justify-center">
-                        <i className="fas fa-receipt text-zinc-400"></i>
+            {/* Recent activity */}
+            <div className="mt-6">
+              <GlassPanel>
+                <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <i className="fas fa-history text-blue-500"></i>
+                    Recent Activity
+                  </h3>
+                  <span className="text-xs text-gray-500">
+                    latest hisaab totals
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  {hisaabTotals.slice(0, 5).map((hisaab) => (
+                    <div
+                      key={hisaab._id}
+                      className="rounded-lg border border-gray-200 bg-gray-50 p-4 flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-11 h-11 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center">
+                          <i className="fas fa-receipt text-gray-500"></i>
+                        </div>
+
+                        <div className="min-w-0">
+                          <p className="font-bold truncate">{hisaab.title}</p>
+                          <p className="text-xs text-gray-500">
+                            Added recently
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-white font-semibold">{hisaab.title}</p>
-                        <p className="text-xs text-zinc-400">Added recently</p>
-                      </div>
+
+                      <p className="text-gray-900 font-bold">
+                        ₹{hisaab.totalValue.toLocaleString("en-IN")}
+                      </p>
                     </div>
-                    <p className="text-white font-bold">
-                      ₹{hisaab.totalValue.toLocaleString('en-IN')}
-                    </p>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </GlassPanel>
             </div>
           </>
         )}
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 bg-black py-8 sm:py-10 mt-8 sm:mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-zinc-400">
+      <footer className="border-t border-gray-200 bg-white">
+        <div className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-10 text-gray-600">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-              <i className="fas fa-wallet text-indigo-500"></i> KhaataPro
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-zinc-500">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                <i className="fas fa-wallet text-white"></i>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                KhaataPro
+              </h2>
+            </div>
+            <p className="mt-3 text-gray-500">
               Smart, simple, and powerful expense tracking for everyone.
             </p>
           </div>
 
           <div>
-            <h3 className="text-white font-semibold mb-3 text-sm sm:text-base">Quick Links</h3>
-            <ul className="space-y-2 text-sm sm:text-base">
-              <li><a href="/dashboard" className="hover:text-indigo-500 transition">Dashboard</a></li>
-              <li><a href="/create" className="hover:text-indigo-500 transition">Add New Hisaab</a></li>
-              <li><a href="/scanner" className="hover:text-indigo-500 transition">Scan Receipt</a></li>
+            <h3 className="text-gray-900 font-bold mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-gray-500">
+              <li>
+                <a href="/" className="hover:text-blue-500 transition">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/create" className="hover:text-blue-500 transition">
+                  Add New Hisaab
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/scanner"
+                  className="hover:text-blue-500 transition"
+                >
+                  Scanner
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-white font-semibold mb-3 text-sm sm:text-base">Connect</h3>
-            <div className="flex gap-4 text-lg sm:text-xl">
-              <a href="#" className="hover:text-indigo-500 transition"><i className="fab fa-instagram"></i></a>
-              <a href="#" className="hover:text-indigo-500 transition"><i className="fab fa-twitter"></i></a>
-              <a href="#" className="hover:text-indigo-500 transition"><i className="fab fa-github"></i></a>
+            <h3 className="text-gray-900 font-bold mb-4">Connect</h3>
+            <div className="flex gap-4 text-xl text-gray-500">
+              <a href="#" className="hover:text-blue-500 transition">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="#" className="hover:text-blue-500 transition">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="#" className="hover:text-blue-500 transition">
+                <i className="fab fa-github"></i>
+              </a>
             </div>
-            <p className="text-zinc-500 mt-3 text-xs sm:text-sm">support@khaatapro.com</p>
+            <p className="text-gray-400 mt-3 text-sm">
+              support@khaatapro.com
+            </p>
           </div>
         </div>
 
-        <div className="mt-8 sm:mt-10 border-t border-zinc-800 pt-4 text-center text-zinc-500 text-xs sm:text-sm">
+        <div className="border-t border-gray-200 py-5 text-center text-gray-400 text-sm">
           © {new Date().getFullYear()} KhaataPro — All Rights Reserved.
         </div>
       </footer>
+    </div>
+  );
+}
+
+/* ----------------------- UI Components (NO LOGIC CHANGE) ----------------------- */
+
+function GlassPanel({ children }) {
+  return (
+    <div className="rounded-xl border border-gray-200 bg-white p-4 sm:p-6 shadow-md">
+      {children}
+    </div>
+  );
+}
+
+function StatCard({ title, value, icon, accent = "blue" }) {
+  const accentMap = {
+    blue: "bg-blue-100 border-blue-200 text-blue-500",
+    green: "bg-green-100 border-green-200 text-green-500",
+    purple: "bg-purple-100 border-purple-200 text-purple-500",
+    yellow: "bg-yellow-100 border-yellow-200 text-yellow-500",
+  };
+
+  const accentClass = accentMap[accent] || accentMap.blue;
+
+  return (
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-md">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm text-gray-500">{title}</p>
+          <p className="mt-2 text-2xl sm:text-3xl font-bold text-gray-900">
+            {value}
+          </p>
+        </div>
+
+        <div
+          className={`w-12 h-12 rounded-lg border flex items-center justify-center ${accentClass}`}
+        >
+          <i className={`${icon} text-lg`}></i>
+        </div>
+      </div>
     </div>
   );
 }

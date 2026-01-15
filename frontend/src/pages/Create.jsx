@@ -81,18 +81,18 @@ export default function CreateHisaab() {
   }, 0);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Navigation */}
-      <nav className="border-b border-zinc-800">
+      <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
               <i className="fas fa-wallet text-white text-lg"></i>
             </div>
-            <h1 className="text-2xl font-bold text-white">KhaataPro</h1>
+            <h1 className="text-2xl font-bold text-gray-900">KhaataPro</h1>
           </div>
           <div className="flex items-center gap-4">
-            <a className="text-zinc-400 hover:text-white font-medium transition" href="/">
+            <a className="text-gray-600 hover:text-blue-600 font-medium transition" href="/">
               <i className="fas fa-home mr-2"></i>
               <span className="hidden sm:inline">Home</span>
             </a>
@@ -101,15 +101,15 @@ export default function CreateHisaab() {
       </nav>
 
       {/* Hero Section */}
-      <div className="border-b border-zinc-800">
+      <div className="bg-gradient-to-b from-blue-50 to-white border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-6 py-12 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-600 bg-opacity-20 rounded-2xl mb-4">
-            <i className="fas fa-plus-circle text-indigo-500 text-3xl"></i>
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-4">
+            <i className="fas fa-plus-circle text-blue-600 text-3xl"></i>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
             Create New Hisaab
           </h2>
-          <p className="text-zinc-400 text-lg">
+          <p className="text-gray-600 text-lg">
             Track your expenses with detailed records
           </p>
         </div>
@@ -117,19 +117,19 @@ export default function CreateHisaab() {
 
       {/* Form Section */}
       <div className="max-w-4xl mx-auto px-6 py-12">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-md">
           <form onSubmit={handleSubmit} className="space-y-8">
             
             {/* Basic Info */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <i className="fas fa-info-circle text-indigo-500"></i>
+              <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <i className="fas fa-info-circle text-blue-600"></i>
                 Basic Information
               </h3>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-200 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Title <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -139,12 +139,12 @@ export default function CreateHisaab() {
                     onChange={handleChange}
                     placeholder="e.g., Grocery Shopping"
                     required
-                    className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-zinc-200 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Category <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -152,7 +152,7 @@ export default function CreateHisaab() {
                     value={formData.label}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   >
                     <option value="">Select Category</option>
                     <option value="Food">Food</option>
@@ -168,21 +168,21 @@ export default function CreateHisaab() {
               </div>
 
               {/* Encryption Option */}
-              <div className="bg-black border border-zinc-800 rounded-lg p-4">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     name="encrypted"
                     checked={formData.encrypted}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 bg-zinc-900 border-zinc-700 rounded focus:ring-2 focus:ring-indigo-500"
+                    className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                   <div className="flex-1">
-                    <span className="text-white font-medium flex items-center gap-2">
-                      <i className="fas fa-lock text-yellow-500"></i>
+                    <span className="text-gray-900 font-medium flex items-center gap-2">
+                      <i className="fas fa-lock text-yellow-600"></i>
                       Enable Password Protection
                     </span>
-                    <p className="text-xs text-zinc-400 mt-1">
+                    <p className="text-xs text-gray-600 mt-1">
                       Keep this hisaab private and secure with a password
                     </p>
                   </div>
@@ -197,7 +197,7 @@ export default function CreateHisaab() {
                       onChange={handleChange}
                       placeholder="Enter password"
                       required={formData.encrypted}
-                      className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                      className="w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     />
                   </div>
                 )}
@@ -207,14 +207,14 @@ export default function CreateHisaab() {
             {/* Expense Items */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <i className="fas fa-receipt text-indigo-500"></i>
+                <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                  <i className="fas fa-receipt text-blue-600"></i>
                   Expense Items
                 </h3>
                 <button
                   type="button"
                   onClick={addContentItem}
-                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition text-sm"
+                  className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition text-sm shadow-lg shadow-blue-500/25"
                 >
                   <i className="fas fa-plus"></i>
                   Add Item
@@ -223,7 +223,7 @@ export default function CreateHisaab() {
 
               <div className="space-y-3">
                 {content.map((item, index) => (
-                  <div key={index} className="bg-black border border-zinc-800 rounded-lg p-4">
+                  <div key={index} className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                     <div className="flex items-start gap-3">
                       <div className="flex-1 grid md:grid-cols-2 gap-3">
                         <input
@@ -231,10 +231,10 @@ export default function CreateHisaab() {
                           placeholder="Item name"
                           value={item.key}
                           onChange={(e) => handleContentChange(index, "key", e.target.value)}
-                          className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                          className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                         />
                         <div className="relative">
-                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400">₹</span>
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₹</span>
                           <input
                             type="number"
                             placeholder="0.00"
@@ -242,7 +242,7 @@ export default function CreateHisaab() {
                             onChange={(e) => handleContentChange(index, "value", e.target.value)}
                             step="0.01"
                             min="0"
-                            className="w-full pl-8 pr-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                            className="w-full pl-8 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                           />
                         </div>
                       </div>
@@ -250,7 +250,7 @@ export default function CreateHisaab() {
                         <button
                           type="button"
                           onClick={() => removeContentItem(index)}
-                          className="p-2.5 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition"
+                          className="p-2.5 text-red-500 hover:text-red-600 hover:bg-red-100 rounded-lg transition"
                         >
                           <i className="fas fa-trash"></i>
                         </button>
@@ -261,10 +261,10 @@ export default function CreateHisaab() {
               </div>
 
               {/* Total Amount */}
-              <div className="bg-indigo-600 bg-opacity-10 border border-indigo-600 border-opacity-30 rounded-lg p-4">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-300 font-medium">Total Amount:</span>
-                  <span className="text-2xl font-bold text-indigo-400">
+                  <span className="text-gray-700 font-medium">Total Amount:</span>
+                  <span className="text-2xl font-bold text-blue-600">
                     ₹{totalAmount.toFixed(2)}
                   </span>
                 </div>
@@ -276,14 +276,14 @@ export default function CreateHisaab() {
               <button
                 type="button"
                 onClick={() => navigate("/")}
-                className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
               >
                 {loading ? (
                   <>
@@ -303,39 +303,42 @@ export default function CreateHisaab() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 bg-black py-10 mt-12">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-zinc-400">
+      <footer className="border-t border-gray-200 bg-white py-10 mt-12">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-gray-600">
           <div>
-            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-              <i className="fas fa-wallet text-indigo-500"></i> KhaataPro
+            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                <i className="fas fa-wallet text-white"></i>
+              </div>
+              KhaataPro
             </h2>
-            <p className="mt-3 text-zinc-500">
+            <p className="mt-3 text-gray-500">
               Smart, simple, and powerful expense tracking for everyone.
             </p>
           </div>
 
           <div>
-            <h3 className="text-white font-semibold mb-3">Quick Links</h3>
+            <h3 className="text-gray-900 font-semibold mb-3">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="/dashboard" className="hover:text-indigo-500 transition">Dashboard</a></li>
-              <li><a href="/create" className="hover:text-indigo-500 transition">Add New Hisaab</a></li>
-              <li><a href="/scanner" className="hover:text-indigo-500 transition">Scan</a></li>
-              <li><a href="/rooms" className="hover:text-indigo-500 transition">My Rooms</a></li>
+              <li><a href="/dashboard" className="hover:text-blue-500 transition">Dashboard</a></li>
+              <li><a href="/create" className="hover:text-blue-500 transition">Add New Hisaab</a></li>
+              <li><a href="/scanner" className="hover:text-blue-500 transition">Scan</a></li>
+              <li><a href="/rooms" className="hover:text-blue-500 transition">My Rooms</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-white font-semibold mb-3">Connect</h3>
-            <div className="flex gap-4 text-xl">
-              <a href="#" className="hover:text-indigo-500 transition"><i className="fab fa-instagram"></i></a>
-              <a href="#" className="hover:text-indigo-500 transition"><i className="fab fa-twitter"></i></a>
-              <a href="#" className="hover:text-indigo-500 transition"><i className="fab fa-github"></i></a>
+            <h3 className="text-gray-900 font-semibold mb-3">Connect</h3>
+            <div className="flex gap-4 text-xl text-gray-500">
+              <a href="#" className="hover:text-blue-500 transition"><i className="fab fa-instagram"></i></a>
+              <a href="#" className="hover:text-blue-500 transition"><i className="fab fa-twitter"></i></a>
+              <a href="#" className="hover:text-blue-500 transition"><i className="fab fa-github"></i></a>
             </div>
-            <p className="text-zinc-500 mt-3 text-sm">support@khaatapro.com</p>
+            <p className="text-gray-400 mt-3 text-sm">support@khaatapro.com</p>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-zinc-800 pt-4 text-center text-zinc-500 text-sm">
+        <div className="mt-10 border-t border-gray-200 pt-4 text-center text-gray-400 text-sm">
           © {new Date().getFullYear()} KhaataPro — All Rights Reserved.
         </div>
       </footer>

@@ -63,20 +63,20 @@ export default function RoomPage() {
   const tabBtnClass = (key) =>
     `tab-btn flex-1 py-2 px-3 rounded-lg text-sm font-medium transition ${
       activeTab === key
-        ? "bg-indigo-600 text-white"
-        : "bg-gray-800 text-gray-400"
+        ? "bg-blue-500 text-white"
+        : "bg-gray-100 text-gray-600"
     }`;
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Navbar */}
-      <nav className="border-b border-gray-800 sticky top-0 z-50 bg-black">
+      <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
         <div className="max-w-full mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm sm:text-lg">💼</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <i className="fas fa-wallet text-white text-sm sm:text-lg"></i>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               KhaataPro
             </h3>
           </div>
@@ -84,34 +84,34 @@ export default function RoomPage() {
           <div>
             <Link
               to="/"
-              className="text-gray-400 hover:text-white font-medium transition text-sm sm:text-base"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 transition text-gray-700 font-semibold"
             >
-              🏠 <span className="hidden sm:inline">Home</span>
+              <i className="fas fa-home text-blue-500"></i> <span className="hidden sm:inline">Home</span>
             </Link>
           </div>
         </div>
       </nav>
 
       {/* Mobile Tab Navigation */}
-      <div className="lg:hidden sticky top-[73px] z-40 bg-black border-b border-gray-800 px-4 py-3">
+      <div className="lg:hidden sticky top-[73px] z-40 bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
         <div className="flex gap-2">
           <button
             onClick={() => setActiveTab("create")}
             className={tabBtnClass("create")}
           >
-            ➕ Create
+            <i className="fas fa-plus"></i> Create
           </button>
           <button
             onClick={() => setActiveTab("myRooms")}
             className={tabBtnClass("myRooms")}
           >
-            👤 My Rooms
+            <i className="fas fa-user"></i> My Rooms
           </button>
           <button
             onClick={() => setActiveTab("allRooms")}
             className={tabBtnClass("allRooms")}
           >
-            🚪 All Rooms
+            <i className="fas fa-door-open"></i> All Rooms
           </button>
         </div>
       </div>
@@ -122,19 +122,19 @@ export default function RoomPage() {
         <aside
           className={`${
             activeTab === "myRooms" ? "block" : "hidden"
-          } lg:block lg:w-80 bg-black border-r border-gray-800 overflow-y-auto`}
+          } lg:block lg:w-80 bg-gray-50 border-r border-gray-200 overflow-y-auto`}
         >
           <div className="p-4 sm:p-6">
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <span className="text-indigo-500">👤</span>
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <i className="fas fa-user text-blue-500"></i>
               My Rooms
-              <span className="ml-auto text-xs bg-indigo-600 px-2 py-1 rounded-full">
+              <span className="ml-auto text-xs bg-blue-500 text-white px-2 py-1 rounded-full">
                 Joined
               </span>
             </h3>
 
             {loadingRooms ? (
-              <p className="text-gray-400">Loading...</p>
+              <p className="text-gray-600">Loading...</p>
             ) : myRooms.length === 0 ? (
               <p className="text-gray-500 text-sm">You haven’t joined any room.</p>
             ) : (
@@ -142,20 +142,20 @@ export default function RoomPage() {
                 {myRooms.map((room) => (
                   <div
                     key={room._id}
-                    className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 p-4 rounded-lg border border-indigo-700 hover:border-indigo-500 hover:shadow-lg hover:shadow-indigo-600/30 transition cursor-pointer"
+                    className="bg-white p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md hover:shadow-blue-300/30 transition cursor-pointer"
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-semibold text-white">{room.name}</h4>
-                      <span className="text-xs bg-indigo-600 text-white px-2 py-1 rounded-full">
+                      <h4 className="font-semibold text-gray-900">{room.name}</h4>
+                      <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
                         Active
                       </span>
                     </div>
-                    <p className="text-sm text-gray-400 mb-3">
+                    <p className="text-sm text-gray-600 mb-3">
                       {room.description || "No description"}
                     </p>
                     <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>👥 {room.members?.length || 0} members</span>
-                      <span>🔒 Protected</span>
+                      <span><i className="fas fa-users"></i> {room.members?.length || 0} members</span>
+                      <span><i className="fas fa-lock"></i> Protected</span>
                     </div>
                   </div>
                 ))}
@@ -172,18 +172,18 @@ export default function RoomPage() {
         <main
           className={`${
             activeTab === "create" ? "flex" : "hidden"
-          } lg:flex flex-1 items-center justify-center bg-black overflow-hidden`}
+          } lg:flex flex-1 items-center justify-center bg-gray-50 overflow-hidden`}
         >
           <div className="max-w-2xl w-full mx-auto px-4 sm:px-6">
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl shadow-xl p-6 sm:p-8">
+            <div className="bg-white border border-gray-200 rounded-xl shadow-md p-6 sm:p-8">
               <div className="text-center mb-6 sm:mb-8">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <span className="text-white text-xl sm:text-2xl">➕</span>
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg shadow-blue-500/25">
+                  <i className="fas fa-plus text-white text-xl sm:text-2xl"></i>
                 </div>
-                <h2 className="text-2xl sm:text-4xl font-bold text-white mb-2">
+                <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2">
                   Create a Room
                 </h2>
-                <p className="text-sm sm:text-base text-gray-400">
+                <p className="text-sm sm:text-base text-gray-600">
                   Add a shared room for you and your friends to track expenses
                   together.
                 </p>
@@ -192,8 +192,8 @@ export default function RoomPage() {
               {/* FORM */}
               <form onSubmit={handleCreateRoom} className="space-y-5 sm:space-y-6">
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2 text-sm sm:text-base">
-                    🚪 Room Name
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
+                    <i className="fas fa-door-open mr-2"></i> Room Name
                   </label>
 
                   <input
@@ -204,14 +204,14 @@ export default function RoomPage() {
                     onChange={(e) =>
                       setForm((p) => ({ ...p, name: e.target.value }))
                     }
-                    className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white text-sm sm:text-base
-                    focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 text-sm sm:text-base
+                    focus:ring-2 focus:ring-blue-500 focus:border-transparent transition placeholder-gray-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2 text-sm sm:text-base">
-                    📝 Description (optional)
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
+                    <i className="fas fa-file-alt mr-2"></i> Description (optional)
                   </label>
 
                   <textarea
@@ -221,14 +221,14 @@ export default function RoomPage() {
                     onChange={(e) =>
                       setForm((p) => ({ ...p, description: e.target.value }))
                     }
-                    className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white text-sm sm:text-base
-                    focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 text-sm sm:text-base
+                    focus:ring-2 focus:ring-blue-500 focus:border-transparent transition placeholder-gray-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2 text-sm sm:text-base">
-                    🔒 Room Password
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
+                    <i className="fas fa-lock mr-2"></i> Room Password
                   </label>
 
                   <input
@@ -239,8 +239,8 @@ export default function RoomPage() {
                     onChange={(e) =>
                       setForm((p) => ({ ...p, password: e.target.value }))
                     }
-                    className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white text-sm sm:text-base
-                    focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 text-sm sm:text-base
+                    focus:ring-2 focus:ring-blue-500 focus:border-transparent transition placeholder-gray-400"
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Share this with members to join the room
@@ -250,11 +250,11 @@ export default function RoomPage() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-700 
+                    className="w-full flex justify-center items-center gap-2 bg-blue-500 hover:bg-blue-600 
                     text-white font-semibold py-3 sm:py-4 rounded-lg transition duration-200 
-                    shadow-lg hover:shadow-indigo-700/20"
+                    shadow-lg hover:shadow-blue-600/20"
                   >
-                    ➕ Create Room
+                    <i className="fas fa-plus"></i> Create Room
                   </button>
                 </div>
               </form>
@@ -266,12 +266,12 @@ export default function RoomPage() {
         <aside
           className={`${
             activeTab === "allRooms" ? "block" : "hidden"
-          } lg:block lg:w-80 bg-black border-l border-gray-800 overflow-y-auto`}
+          } lg:block lg:w-80 bg-gray-50 border-l border-gray-200 overflow-y-auto`}
         >
           <div className="p-4 sm:p-6">
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-2">
-              🚪 All Rooms
-              <span className="ml-auto text-xs bg-gray-700 px-2 py-1 rounded-full">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <i className="fas fa-door-open text-blue-500"></i> All Rooms
+              <span className="ml-auto text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
                 Public
               </span>
             </h3>
@@ -284,32 +284,32 @@ export default function RoomPage() {
                   placeholder="Search rooms..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-black border border-gray-800 rounded-lg text-white text-sm sm:text-base
-                  focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition placeholder-gray-500"
+                  className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 text-sm sm:text-base
+                  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition placeholder-gray-400"
                 />
-                <span className="absolute left-3 top-2.5 text-gray-500">🔍</span>
+                <i className="fas fa-search absolute left-3 top-2.5 text-gray-500"></i>
               </div>
             </div>
 
             {loadingRooms ? (
-              <p className="text-gray-400">Loading...</p>
+              <p className="text-gray-600">Loading...</p>
             ) : (
               <div className="space-y-3">
                 {filteredAllRooms.map((room) => (
                   <div
                     key={room._id}
-                    className="bg-gray-900 p-4 rounded-lg border border-gray-800 hover:border-indigo-600 hover:shadow-lg hover:shadow-indigo-600/20 transition cursor-pointer"
+                    className="bg-white p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md hover:shadow-blue-300/20 transition cursor-pointer"
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-semibold text-white">{room.name}</h4>
-                      <span className="text-gray-500 text-xs">🔒</span>
+                      <h4 className="font-semibold text-gray-900">{room.name}</h4>
+                      <span className="text-gray-500 text-xs"><i className="fas fa-lock"></i></span>
                     </div>
-                    <p className="text-sm text-gray-400 mb-3">
+                    <p className="text-sm text-gray-600 mb-3">
                       {room.description || "No description"}
                     </p>
                     <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>👥 {room.members?.length || 0} members</span>
-                      <button className="text-indigo-500 font-medium hover:text-indigo-400">
+                      <span><i className="fas fa-users"></i> {room.members?.length || 0} members</span>
+                      <button className="text-blue-500 font-medium hover:text-blue-600">
                         Join →
                       </button>
                     </div>
@@ -321,7 +321,7 @@ export default function RoomPage() {
             <div className="mt-6 text-center">
               <button
                 onClick={fetchRooms}
-                className="text-sm text-indigo-500 hover:text-indigo-400 font-medium transition"
+                className="text-sm text-blue-500 hover:text-blue-600 font-medium transition"
               >
                 Refresh Rooms →
               </button>
