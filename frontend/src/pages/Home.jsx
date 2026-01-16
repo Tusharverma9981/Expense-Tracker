@@ -20,9 +20,16 @@ export default function Home() {
       .catch(() => navigate("/login"));
   }, []);
 
-  const handleLogout = () => {
-    // Add your logout logic here
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout", {
+        withCredentials: true, // cookie send/clear karne ke liye important
+      });
+  
+      navigate("/login");
+    } catch (error) {
+      console.log("Logout error:", error);
+    }
   };
 
   const filteredAndSortedHisaabs = () => {
