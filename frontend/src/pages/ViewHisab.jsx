@@ -5,34 +5,39 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import UnlockHisaab from "./UnlockHisaab";
 
+// Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-export default function ViewHisaab() {
-  const [hisaab, setHisaab] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function ViewHisaab({ hisaab: propHisaab }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [hisaab, setHisaab] = useState(propHisaab || null);
+  const [loading, setLoading] = useState(!propHisaab);
 
   useEffect(() => {
-    api
-      .get(`/hisaabs/${id}`)
-      .then((res) => {
-        setHisaab(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        alert("Failed to load hisaab");
-        navigate("/");
-      });
-  }, [id, navigate]);
+    if (!hisaab && id) {
+      setLoading(true);
+      api
+        .get(`/hisaabs/${id}`)
+        .then((res) => {
+          setHisaab(res.data);
+        })
+        .catch(() => {
+          alert("Failed to load hisaab");
+          navigate("/");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [id, hisaab, navigate]);
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this Hisaab?")) {
       return;
     }
-
     try {
-      await api.delete(`/hisaabs/${id}`);
+      await api.delete(`/hisaabs/${hisaab._id || id}`);
       alert("Hisaab deleted successfully!");
       navigate("/");
     } catch (err) {
@@ -130,10 +135,6 @@ export default function ViewHisaab() {
       }
     }
   };
-
-  if (hisaab.encrypted) {
-    return <UnlockHisaab id={id} />;
-  }
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', sans-serif" }}>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import Hisab1 from "./Hisab1";
+import ViewHisaab from "./ViewHisab";
 
 export default function UnlockHisaab({ id }) {
   const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ export default function UnlockHisaab({ id }) {
   // ✅ after unlock show full page
   if (hisaab) {
     return (
-     <Hisab1 hisaab={hisaab} />
+     <ViewHisaab hisaab={hisaab} />
     );
   }
 
