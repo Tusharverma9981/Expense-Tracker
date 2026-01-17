@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const [hisaabs, setHisaabs] = useState([]);
@@ -22,10 +23,10 @@ export default function Home() {
 
   const handleLogout = async () => {
     try {
-      await api.post("/auth/logout", {
+    await api.post("/auth/logout", {
         withCredentials: true, // cookie send/clear karne ke liye important
       });
-  
+       toast.success("Logout successfully!");
       navigate("/login");
     } catch (error) {
       console.log("Logout error:", error);

@@ -4,6 +4,7 @@ import api from "../services/api";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import UnlockHisaab from "./UnlockHisaab";
+import { toast } from "react-toastify";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -33,10 +34,10 @@ export default function ViewHisaab() {
 
     try {
       await api.delete(`/hisaabs/${id}`);
-      alert("Hisaab deleted successfully!");
+     toast.success("Hisaab deleted successfully!");
       navigate("/");
     } catch (err) {
-      alert("Failed to delete hisaab");
+      toast.error("Failed to delete hisaab");
     }
   };
 

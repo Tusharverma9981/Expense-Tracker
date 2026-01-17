@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import api from "../services/api";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function RoomPage() {
   const [activeTab, setActiveTab] = useState("create"); // create | myRooms | allRooms
@@ -31,7 +32,7 @@ export default function RoomPage() {
       setAllRooms(res.data.allRooms || []);
       setMyRooms(res.data.myRooms || []);
     } catch (err) {
-      alert(err?.response?.data?.message || "Failed to load rooms");
+      toast.error(err?.response?.data?.message || "Failed to load rooms");
     } finally {
       setLoadingRooms(false);
     }
@@ -45,18 +46,18 @@ export default function RoomPage() {
     e.preventDefault();
 
     if (!form.name || !form.password) {
-      alert("Room name and password required");
+     toast.error("Room name and password required");
       return;
     }
 
     try {
       await api.post("/rooms", form);
-      alert("Room created ✅");
+     toast.success("Room created ✅");
       setForm({ name: "", description: "", password: "" });
       setActiveTab("myRooms");
       fetchRooms();
     } catch (err) {
-      alert(err?.response?.data?.message || "Create room failed");
+      toast.error(err?.response?.data?.message || "Create room failed");
     }
   };
 

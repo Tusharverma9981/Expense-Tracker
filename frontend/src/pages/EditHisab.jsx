@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export default function EditHisaab() {
   const [formData, setFormData] = useState({
@@ -89,10 +90,11 @@ export default function EditHisaab() {
 
       await api.put(`/hisaabs/${id}`, updateData);
 
-      alert("Hisaab updated successfully! ✅");
+     // alert("Hisaab updated successfully! ✅");
+      toast.success("Update successful!");
       navigate(`/hisaab/${id}`);
     } catch (err) {
-      alert(err?.response?.data?.message || "Failed to update hisaab");
+      toast.error(err?.response?.data?.message || "Failed to update hisaab");
     } finally {
       setLoading(false);
     }

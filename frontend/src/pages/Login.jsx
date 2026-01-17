@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,9 +12,10 @@ export default function Login() {
     e.preventDefault();
     try {
       await api.post("/auth/login", { email, password });
+      toast.success("Login successful ✅");
       navigate("/");
     } catch (err) {
-      alert(err?.response?.data?.message || "Login failed");
+      toast.error(err?.response?.data?.message || "Login failed");
     }
   };
 
@@ -50,9 +52,7 @@ export default function Login() {
                 <label className="block text-sm font-medium text-black">
                   Password
                 </label>
-                <a href="#" className="text-sm text-cyan-400 hover:text-cyan-300 transition">
-                  
-                </a>
+                
               </div>
               <input
                 type="password"

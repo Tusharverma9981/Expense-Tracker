@@ -10,11 +10,15 @@ import EditHisaab from "./pages/EditHisab";
 import Scanner from "./pages/Scanner";
 import RoomPage from "./pages/Rooms";
 import PaymentApp from "./pages/Payment";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
 export default function App() {
   return (
+    <>
+     <ToastContainer />
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -30,5 +34,6 @@ export default function App() {
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
+    </>
   );
 }

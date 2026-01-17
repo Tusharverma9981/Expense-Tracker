@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export default function CreateHisaab() {
   const [formData, setFormData] = useState({
@@ -41,18 +42,18 @@ export default function CreateHisaab() {
     e.preventDefault();
 
     if (!formData.title || !formData.label) {
-      alert("Title and Label are required");
+      toast.error("Title and Label are required");
       return;
     }
 
     if (formData.encrypted && !formData.password) {
-      alert("Password is required for encrypted hisaab");
+     toast.error("Password is required for encrypted hisaab");
       return;
     }
 
     const validContent = content.filter(item => item.key && item.value);
     if (validContent.length === 0) {
-      alert("Please add at least one expense item");
+      toast.error("Please add at least one expense item");
       return;
     }
 
@@ -66,10 +67,10 @@ export default function CreateHisaab() {
         password: formData.encrypted ? formData.password : undefined
       });
 
-      alert("Hisaab created successfully! ✅");
+     toast.success("Hisaab created successfully!");
       navigate("/");
     } catch (err) {
-      alert(err?.response?.data?.message || "Failed to create hisaab");
+      toast.error(err?.response?.data?.message || "Failed to create hisaab");
     } finally {
       setLoading(false);
     }

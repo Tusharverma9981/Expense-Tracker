@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
-import Hisab1 from "./Hisab1";
 import ViewHisaab from "./ViewHisab";
+import { toast } from "react-toastify";
 
 export default function UnlockHisaab({ id }) {
   const [password, setPassword] = useState("");
@@ -15,7 +15,7 @@ export default function UnlockHisaab({ id }) {
       const res = await api.post(`/hisaabs/${id}/unlock`, { password });
       setHisaab(res.data);
     } catch (err) {
-      alert(err?.response?.data?.message || "Wrong password");
+     toast.error(err?.response?.data?.message || "Wrong password");
     } finally {
       setLoading(false);
     }
